@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded",() => {
         return;
     }
 
-    srchBtn.addEventListener('click',async ()=> {
+    srchBtn.addEventListener('click', async ()=> {
         try {
             const response = await fetch("superheroes.php");
 
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded",() => {
             }
 
             const avengers = await response.text();
-            alert(avengers)
+            alert(avengers);
         } catch (error) {
             console.error("An error has occured :", error);
         }
