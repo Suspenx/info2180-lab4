@@ -90,6 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 } else {
     // If the request method is not GET, return Method Not Allowed status
     http_response_code(405);
-    echo " ot Allowed";
+    echo " Not Allowed";
 }
 ?>

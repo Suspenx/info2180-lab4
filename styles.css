@@ -1,0 +1,33 @@
+.Avengers{
+    padding: auto;
+    display: flex;
+    justify-content: center;
+
+    background-color: #729fee;
+
+    color: white;
+    text-transform: uppercase;
+
+}
+body{
+    background-color:whitesmoke;
+}
+
+#hero_form {
+    display:flex ;
+    flex-direction: column;
+    gap: 4px;
+    margin-left: 50px;
+    padding-top: 25px;
+    padding-right: 20px;
+}
+ 
+#name{
+    width: 500px;
+    height:15px;
+}
+
+#search{
+    background-color: red;
+    height: 20px;
+}
