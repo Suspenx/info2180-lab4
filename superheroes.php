@@ -1,6 +1,5 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-
 $superheroes = [
   [
       "id" => 1,
@@ -64,10 +63,33 @@ $superheroes = [
   ], 
 ];
 
-?>
+// Check if the request method is GET
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // Check if the 'query' parameter is set in the GET request
+    if (isset($_GET['query'])) {
+        // Sanitize and trim the 'query' parameter
+        $query = trim(strip_tags($_GET['query']));
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+        // If the query is empty, return the full list of superheroes
+        if (strlen($query) === 0) {
+            echo json_encode($superheroes);
+            return;
+        }
+
+        // Filter superheroes based on the query
+        $queryResult = array_filter($superheroes, function ($val) use ($query) {
+            return strtolower($val['name']) === strtolower($query) || strtolower($val['alias']) === strtolower($query);
+        });
+
+        // Encode and echo the filtered result
+        echo json_encode(array_values($queryResult));
+    } else {
+        // If 'query' parameter is not set, return the full list of superheroes
+        echo json_encode($superheroes);
+    }
+} else {
+    // If the request method is not GET, return Method Not Allowed status
+    http_response_code(405);
+    echo " ot Allowed";
+}
+?>
