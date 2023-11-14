@@ -1,78 +1,39 @@
-// document.addEventListener("DOMContentLoaded",() => {
-//     const srchBtn= document.getElementById("SearchButton")
-
-//     if (!srchBtn){
-//         console.error("Search Button not found")
-//         return;
-//     }
-
-//     srchBtn.addEventListener('click', async ()=> {
-//         try {
-//             const response = await fetch("superheroes.php");
-
-//             if (!response.ok){
-//                 throw new Error ("Http error!");
-//             }
-
-//             const avengers = await response.text();
-//             alert(avengers);
-//         } catch (error) {
-//             console.error("An error has occured :", error);
-//         }
-        
-        
-//     })
-// })
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Get the form element by its ID
+    
     const form = document.getElementById("hero_form");
     
-    // Check if the form element exists
-    if (!form) return;
 
-    // Add a submit event listener to the form
+    
     form.addEventListener('submit', async (event) => {
-        // Prevent the default form submission behavior
+       
         event.preventDefault();
 
-        // Create a FormData object to get form data
-        const data = new FormData(form);
+        // Create a FormData (set of key/value pairs representing form fields and their values) object to get form data
+        const Form_info = new FormData(form);
         // Regular expression to filter unwanted characters
-        const DATA_REGEX = /[a-zA-Z\s]+/g;
+        const filter = /[a-zA-Z\s]+/g;
 
         // Filter unwanted characters from the "name" input
-        const name = data.get("name") ? data.get("name").match(DATA_REGEX).join('') : "";
+        const name = Form_info.get("name") ? Form_info.get("name").match(filter).join('') : "";
         
         // Make a fetch request to superheroes.php with the search query
-        const response = await fetch(`superheroes.php?query=${name}`);
+        const results = await fetch(`superheroes.php?query=${name}`);
 
-        // Get the result container element by its ID
-        const resultDiv = document.getElementById("result");
-
-        // Check if the result container element exists
-        if (!resultDiv) return;
+        
+        const result_contain = document.getElementById("result");
 
         // Handle errors if the fetch request is not successful
-        if (!response.ok) {
-            resultDiv.innerHTML = "<p class=\"error-msg\">Superhero not found</p>";
+        if (!results.ok) {
+            result_contain.innerHTML = "Superhero not found";
             return;
         }
 
-        // Parse the JSON response
-        const fetchedData = await response.json();
+               const info = await results.json();
 
         // Display the result in the result container
-        resultDiv.innerHTML = name !== "" ?
-            fetchedData.map(entry => `
-                <h2>${entry.name}</h2>
-                <h3>A.K.A ${entry.alias}</h3>
-                <article><p>${entry.biography}</p></article>
-            `).join("") :
-            (`
-                <ul>
-                    ${fetchedData.map(entry => `<li>${entry.alias}</li>`).join("")}
-                </ul>
-            `);
+        result_contain.innerHTML = name !== "" ?
+            info.map(entry => `<h2>${entry.name} </h2> <h3>A.K.A ${entry.alias}</h3> <article><p>${entry.biography}</p></article> `).join("") :
+            (`<ul>    ${info.map(entry => `<li>${entry.alias}</li>`).join("")} </ul> `);
     });
 });

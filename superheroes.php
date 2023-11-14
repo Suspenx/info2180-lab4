@@ -68,28 +68,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Check if the 'query' parameter is set in the GET request
     if (isset($_GET['query'])) {
         // Sanitize and trim the 'query' parameter
-        $query = trim(strip_tags($_GET['query']));
+        $hero = trim(strip_tags($_GET['query']));
 
         // If the query is empty, return the full list of superheroes
-        if (strlen($query) === 0) {
+        if (strlen($hero) === 0) {
             echo json_encode($superheroes);
             return;
         }
 
-        // Filter superheroes based on the query
-        $queryResult = array_filter($superheroes, function ($val) use ($query) {
-            return strtolower($val['name']) === strtolower($query) || strtolower($val['alias']) === strtolower($query);
+        // Filter superheroes based on the Hero entered
+        $Result = array_filter($superheroes, function ($avenger) use ($hero) {
+            return strtolower($avenger['name']) === strtolower($hero) or strtolower($avenger['alias']) === strtolower($hero);
         });
 
         // Encode and echo the filtered result
-        echo json_encode(array_values($queryResult));
+        echo json_encode(array_values($Result));
     } else {
         // If 'query' parameter is not set, return the full list of superheroes
         echo json_encode($superheroes);
     }
 } else {
     // If the request method is not GET, return Method Not Allowed status
-    http_response_code(405);
-    echo " Not Allowed";
+    echo json_encode(["error"=>"Method Not Allowed"]);
 }
 ?>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INFO2180 Lab 4</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="app.js"></script>
     
 </head>
 <body>
@@ -12,17 +13,11 @@
         <h1>Avengers Character Search</h1>
     </div>
     <div class="heroes">
-        <form id="hero_form">
-            <label id="label" for="name">Search by Full Name or Alias</label>
+        <form id="hero_form" method="get">
+            <label for="name">Search by Full Name or Alias</label>
             <div class="fields">
-                <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        aria-labelledby="label"
-                        placeholder="e.g. Captain America or Steve Rogers"
-                />
-                <button type="submit" id="search">Search</button>
+                <input type="text" id="name" name="name" placeholder="e.g. Captain America or Steve Rogers"/>
+                <button type="submit" id="srchButton">Search</button>
             </div>
         </form>
         <div class="r-container">
@@ -31,6 +26,7 @@
             <div id="result"></div>
         </div>
     </div>
+    <!-- wont run unless scripts is in body -->
     <script src="app.js"></script>
     </body>
     </html>
